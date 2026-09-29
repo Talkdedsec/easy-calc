@@ -1,33 +1,38 @@
-﻿# Kolay Hesap
+![Kolay Hesap — Less effort. More clarity.](public/banner.png)
 
-Türkçe, mobil uyumlu günlük hesap makinesi. Sayıları yaz; yüzde, indirim, zam ve KDV sonuçlarını anında gör.
+<p align="center"><strong>English</strong> · <a href="docs/README.tr.md">Türkçe</a></p>
+<p align="center"><a href="https://talkdedsec.github.io/kolay-hesap/">Open the calculator</a> · <a href="#getting-started">Get started</a> · <a href="#calculation-rules">Calculation rules</a></p>
 
-**Canlı uygulama:** https://talkdedsec.github.io/kolay-hesap/
+# Kolay Hesap
 
-## Özellikler
+**Everyday calculations, made simple.** Percentages, discounts, increases and VAT in a focused interface, with instant answers.
 
-- Bir sayının yüzdesi, indirimli fiyat ve zamlı tutar
-- Bir sayının diğerine oranı ve yüzde değişim
-- KDV ekleme ve dahil tutardan KDV ayırma
-- Hızlı oran düğmeleri ve anlık sonuçlar
-- Dört işlem, parantez, işlem önceliği, negatif ve ondalık sayılar
-- Virgül veya nokta ile ondalık giriş; Türkçe sonuç biçimi
-- Sonucu kopyalama ve oturum içi işlem geçmişi
-- Büyük dokunmatik tuşlar; işlem alanında Enter ile hesaplama, Esc ile temizleme
-- Üyelik, analitik veya sunucuya hesap gönderimi yok
+## Features
 
-## Çalıştırma
+- **Dark & light themes** — switch at any time; your preference is remembered on your device.
+- **English first, Turkish optional** — all controls, results, errors and number formatting follow your selected language.
+- **Seven quick tools** — percentage, discount, increase, percentage ratio, percentage change, add VAT and remove VAT.
+- **Classic calculator** — operator precedence, parentheses, negative values and decimals, without `eval`.
+- **Less typing** — preset rates, live results, copy to clipboard and reusable session history.
+- **Responsive & accessible** — large touch targets, visible keyboard focus and labeled controls.
+- **Private by design** — calculations run in your browser. No account or analytics; only theme and language preferences use local storage.
 
-Node.js 24 önerilir.
+Changing theme or language preserves your current inputs and calculation history. History is held in memory and clears on refresh.
+
+## Getting started
+
+Use Node.js 24.
 
 ```sh
+git clone https://github.com/Talkdedsec/kolay-hesap.git
+cd kolay-hesap
 npm ci
 npm run dev
 ```
 
-Terminalin gösterdiği yerel adresi aç. Windows PowerShell komut dosyası kısıtlaması varsa `npm` yerine `npm.cmd` kullan.
+Open the local URL printed in the terminal. On Windows, use `npm.cmd` if PowerShell blocks `npm.ps1`.
 
-## Kontrol ve derleme
+## Checks & builds
 
 ```sh
 npm test
@@ -36,28 +41,47 @@ npm run build:pages
 npm run build
 ```
 
-`build:pages`, GitHub Pages için statik uygulamayı `dist-pages/` klasörüne üretir. `build`, Sites / Cloudflare Worker sürümünü üretir. İki sürüm aynı arayüzü ve hesaplama kodunu kullanır.
+| Command | Output |
+| --- | --- |
+| `build:pages` | Static GitHub Pages app in `dist-pages/` |
+| `build` | Sites / Cloudflare Worker app in `dist/` |
 
-## GitHub Pages
+Both builds share the same UI and calculation logic. GitHub Actions tests and publishes every push to `main`; pull requests only run checks. For a fork, set **Settings → Pages → Source → GitHub Actions** and update the repository / social-preview URLs.
 
-Depoda Settings → Pages → Source seçeneğini **GitHub Actions** yap. `main` dalına gönderilen değişiklikler test edilir ve otomatik yayımlanır. Pull request'lerde yalnızca test ve derleme çalışır.
+## Calculation rules
 
-## Hesaplama kuralları
+| Tool | Formula |
+| --- | --- |
+| Percentage | amount × rate / 100 |
+| Discount | amount × (1 − rate / 100) |
+| Increase / add VAT | amount × (1 + rate / 100) |
+| Remove VAT | inclusive amount / (1 + rate / 100) |
+| Percentage ratio | part / whole × 100 |
+| Percentage change | (new − old) / old × 100 |
 
-- İndirim: tutar × (1 − oran / 100)
-- Zam / KDV ekleme: tutar × (1 + oran / 100)
-- KDV ayırma: dahil tutar / (1 + oran / 100)
-- Yüzde değişim: (yeni − eski) / eski × 100; eski değer pozitif olmalı
-- Klasik hesapta `%`, önceki sayıyı 100'e böler: `1000 × 20% = 200`. `1000 + 20% = 1000,2`; tutara yüzde eklemek için **Zam ekle** kullan.
-- Hızlı oranlar örnektir; vergi mevzuatına göre otomatik oran seçilmez.
-- Girişte binlik ayırıcı kullanılmaz; `1234,56` veya `1234.56` yazılır.
-- Sonuçlar en fazla 8 ondalık basamakla gösterilir. JavaScript sayı hassasiyeti geçerlidir; muhasebe defteri veya keyfi hassasiyetli hesap aracı değildir.
-- Geçmiş sadece sayfa açıkken bellekte tutulur; yenilemede silinir.
+- The old value for percentage change must be positive; the whole for a ratio cannot be zero.
+- In the classic calculator, `%` divides the preceding value by 100: `1000 × 20% = 200`. `1000 + 20% = 1000.2`. Use **Increase** to add a percentage to an amount.
+- Decimal input accepts a dot or comma. Do not enter thousands separators: use `1234.56` or `1234,56`.
+- Output follows your language: `1,234.56` in English, `1.234,56` in Turkish.
+- Rates are examples, not automatically selected tax rates.
+- Results display up to eight decimal places. Standard JavaScript number precision applies.
 
-## Yapı
+## Keyboard
 
-- `app/page.tsx`: ortak Türkçe arayüz
-- `app/design.css`: mobil uyumlu tasarım
-- `lib/math.ts`: güvenli matematik ayrıştırıcısı ve formüller (`eval` kullanılmaz)
-- `tests/math.test.mjs`: formül, hata, hassasiyet ve giriş testleri
-- `.github/workflows/pages.yml`: test ve GitHub Pages yayını
+Focus the classic expression field to type a calculation. **Enter** calculates; **Esc** clears. All buttons are reachable with **Tab**.
+
+## Project map
+
+| Path | Purpose |
+| --- | --- |
+| `app/page.tsx` | Shared calculator interface and saved preferences |
+| `app/design.css` | Responsive light and dark themes |
+| `lib/i18n.ts` | English / Turkish text and locale formatting |
+| `lib/math.ts` | Arithmetic parser and calculation formulas |
+| `public/banner.png` | README banner and social preview |
+| `tests/` | Math and localization checks |
+| `.github/workflows/pages.yml` | GitHub Pages automation |
+
+## Banner
+
+The custom banner is in [public/banner.png](public/banner.png), used by both READMEs and link previews. Created with the built-in imagegen tool; the generation brief is in [docs/banner-prompt.md](docs/banner-prompt.md).
