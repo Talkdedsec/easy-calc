@@ -1,11 +1,10 @@
-"use client";
 import { useEffect, useState } from "react";
-import { calculate, evaluate, parseNumber, type Mode } from "../lib/math";
-import { translations, modeConfig, localeFormat, translateError, type Language } from "../lib/i18n";
+import { calculate, evaluate, parseNumber, type Mode } from "./lib/math";
+import { translations, modeConfig, localeFormat, translateError, type Language } from "./lib/i18n";
 
 type Entry = { expression: string; value: number };
 type Theme = "dark" | "light";
-export default function Home() {
+export default function App() {
   const [language, setLanguage] = useState<Language>("en");
   const [theme, setTheme] = useState<Theme>("dark");
   const [ready, setReady] = useState(false);

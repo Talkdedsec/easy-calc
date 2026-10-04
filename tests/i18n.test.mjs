@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { localeFormat, translateError } from "../lib/i18n.ts";
-import { evaluate, calculate } from "../lib/math.ts";
+import { localeFormat, translateError } from "../src/lib/i18n.ts";
+import { evaluate, calculate } from "../src/lib/math.ts";
 
 test("the same result follows English or Turkish number conventions", () => {
   const value = evaluate("1234,5 + 0,06");
