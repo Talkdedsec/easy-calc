@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { calculate, evaluate, parseNumber, format } from "../lib/math.ts";
+import { calculate, evaluate, parseNumber, format } from "../src/lib/math.ts";
 test("seven everyday calculations", () => {
   for (const [mode,a,b,expected] of [["percent",1000,20,200],["discount",1000,20,800],["increase",1000,20,1200],["ratio",250,1000,25],["change",1000,1250,25],["change",1000,750,-25],["vatAdd",1000,20,1200],["vatRemove",1200,20,1000]]) assert.equal(calculate(mode,a,b).value, expected);
 });

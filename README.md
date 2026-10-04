@@ -35,18 +35,13 @@ Open the local URL printed in the terminal. On Windows, use `npm.cmd` if PowerSh
 ## Checks & builds
 
 ```sh
+npm run typecheck
+npm run lint
 npm test
-npx tsc --noEmit
-npm run build:pages
 npm run build
 ```
 
-| Command | Output |
-| --- | --- |
-| `build:pages` | Static GitHub Pages app in `dist-pages/` |
-| `build` | Sites / Cloudflare Worker app in `dist/` |
-
-Both builds share the same UI and calculation logic. GitHub Actions tests and publishes every push to `main`; pull requests only run checks. For a fork, set **Settings → Pages → Source → GitHub Actions** and update the repository / social-preview URLs.
+`npm run build` writes the static site to `dist/`; `npm run preview` serves it locally. GitHub Actions runs every check above and publishes each push to `main`; pull requests only run checks. For a fork, set **Settings → Pages → Source → GitHub Actions** and update the repository / social-preview URLs.
 
 ## Calculation rules
 
@@ -74,14 +69,11 @@ Focus the classic expression field to type a calculation. **Enter** calculates; 
 
 | Path | Purpose |
 | --- | --- |
-| `app/page.tsx` | Shared calculator interface and saved preferences |
-| `app/design.css` | Responsive light and dark themes |
-| `lib/i18n.ts` | English / Turkish text and locale formatting |
-| `lib/math.ts` | Arithmetic parser and calculation formulas |
+| `src/App.tsx` | Calculator interface and saved preferences |
+| `src/design.css` | Responsive light and dark themes |
+| `src/lib/i18n.ts` | English / Turkish text and locale formatting |
+| `src/lib/math.ts` | Arithmetic parser and calculation formulas |
+| `public/preferences.js` | Applies the saved theme and language before first paint |
 | `public/banner.png` | README banner and social preview |
 | `tests/` | Math and localization checks |
-| `.github/workflows/pages.yml` | GitHub Pages automation |
-
-## Banner
-
-The custom banner is in [public/banner.png](public/banner.png), used by both READMEs and link previews. Created with the built-in imagegen tool; the generation brief is in [docs/banner-prompt.md](docs/banner-prompt.md).
+| `.github/workflows/pages.yml` | Checks and GitHub Pages publishing |

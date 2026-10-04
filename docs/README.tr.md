@@ -35,18 +35,13 @@ Terminalde gösterilen yerel adresi aç. Windows PowerShell `npm.ps1` dosyasın�
 ## Kontrol ve derleme
 
 ```sh
+npm run typecheck
+npm run lint
 npm test
-npx tsc --noEmit
-npm run build:pages
 npm run build
 ```
 
-| Komut | Çıktı |
-| --- | --- |
-| `build:pages` | `dist-pages/` altında statik GitHub Pages uygulaması |
-| `build` | `dist/` altında Sites / Cloudflare Worker uygulaması |
-
-İki derleme aynı arayüzü ve hesaplama kodunu kullanır. GitHub Actions, `main` dalına gönderilen değişiklikleri test edip yayımlar; pull request'lerde yalnızca kontroller çalışır. Fork için **Settings → Pages → Source → GitHub Actions** seç ve depo / sosyal önizleme adreslerini güncelle.
+`npm run build` statik siteyi `dist/` altına yazar; `npm run preview` onu yerelde açar. GitHub Actions yukarıdaki tüm kontrolleri çalıştırır ve `main` dalına gönderilen her değişikliği yayımlar; pull request'lerde yalnızca kontroller çalışır. Fork için **Settings → Pages → Source → GitHub Actions** seç ve depo / sosyal önizleme adreslerini güncelle.
 
 ## Hesaplama kuralları
 
@@ -74,14 +69,11 @@ Klasik hesap alanına tıklayıp işlemini yaz. **Enter** hesaplar, **Esc** temi
 
 | Dosya | Görev |
 | --- | --- |
-| `app/page.tsx` | Ortak arayüz ve tercih yönetimi |
-| `app/design.css` | Mobil uyumlu açık ve koyu temalar |
-| `lib/i18n.ts` | İngilizce / Türkçe metinler ve sayı biçimi |
-| `lib/math.ts` | İşlem ayrıştırıcısı ve hesaplama formülleri |
+| `src/App.tsx` | Hesap makinesi arayüzü ve tercih yönetimi |
+| `src/design.css` | Mobil uyumlu açık ve koyu temalar |
+| `src/lib/i18n.ts` | İngilizce / Türkçe metinler ve sayı biçimi |
+| `src/lib/math.ts` | İşlem ayrıştırıcısı ve hesaplama formülleri |
+| `public/preferences.js` | Kayıtlı tema ve dili ilk boyamadan önce uygular |
 | `public/banner.png` | README banner'ı ve sosyal önizleme |
 | `tests/` | Matematik ve yerelleştirme kontrolleri |
-| `.github/workflows/pages.yml` | Otomatik GitHub Pages yayını |
-
-## Banner
-
-Özel banner [public/banner.png](../public/banner.png) dosyasında bulunur; iki README'de ve bağlantı önizlemelerinde kullanılır. Yerleşik imagegen aracıyla üretildi; üretim metni [docs/banner-prompt.md](banner-prompt.md) dosyasındadır.
+| `.github/workflows/pages.yml` | Kontroller ve GitHub Pages yayını |
