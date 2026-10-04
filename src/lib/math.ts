@@ -36,7 +36,7 @@ export function calculate(mode: Mode, a: number, b: number) {
 export function evaluate(input: string): number {
   if (input.length > 200) throw new Error("İşlem çok uzun.");
   const source = input.replace(/×/g, "*").replace(/÷/g, "/").replace(/−/g, "-").replace(/,/g, ".");
-  const tokens = source.match(/(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?|[()+*/%\-]/gi) ?? [];
+  const tokens = source.match(/(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?|[()+*/%-]/gi) ?? [];
   if (!tokens.length || tokens.join("") !== source.replace(/\s/g, "")) throw new Error("İşlemi kontrol et. Yalnızca sayı ve işlem işaretleri kullan.");
   let index = 0;
   function atom(): number {

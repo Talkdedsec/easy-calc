@@ -4,10 +4,16 @@ import { translations, modeConfig, localeFormat, translateError, type Language }
 
 type Entry = { expression: string; value: number };
 type Theme = "dark" | "light";
+function saved<T extends string>(key: string, allowed: readonly T[], fallback: T): T {
+  try {
+    const value = localStorage.getItem(key);
+    if (allowed.includes(value as T)) return value as T;
+  } catch { /* Storage is optional, including in private browsing. */ }
+  return fallback;
+}
 export default function App() {
-  const [language, setLanguage] = useState<Language>("en");
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [ready, setReady] = useState(false);
+  const [language, setLanguage] = useState<Language>(() => saved("kolayhesap.language", ["en", "tr"], "en"));
+  const [theme, setTheme] = useState<Theme>(() => saved("kolayhesap.theme", ["dark", "light"], "dark"));
   const [mode, setMode] = useState<Mode>("percent");
   const [first, setFirst] = useState("1000"), [second, setSecond] = useState("20");
   const [expression, setExpression] = useState("");
@@ -18,23 +24,13 @@ export default function App() {
   const t = translations[language], active = t.modes[mode];
   const fmt = (value: number) => localeFormat(value, language);
   useEffect(() => {
-    try {
-      const savedLanguage = localStorage.getItem("kolayhesap.language");
-      const savedTheme = localStorage.getItem("kolayhesap.theme");
-      if (savedLanguage === "en" || savedLanguage === "tr") setLanguage(savedLanguage);
-      if (savedTheme === "light" || savedTheme === "dark") setTheme(savedTheme);
-    } catch { /* Storage is optional, including in private browsing. */ }
-    setReady(true);
-  }, []);
-  useEffect(() => {
-    if (!ready) return;
     document.documentElement.lang = language;
     document.documentElement.dataset.theme = theme;
     document.title = t.title;
     document.querySelector('meta[name="description"]')?.setAttribute("content", t.description);
     document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#101813" : "#f6f7f2");
     try { localStorage.setItem("kolayhesap.language", language); localStorage.setItem("kolayhesap.theme", theme); } catch { /* Keep working without storage. */ }
-  }, [language, theme, ready, t.title, t.description]);
+  }, [language, theme, t.title, t.description]);
   let result: ReturnType<typeof calculate> | null = null, resultError = "", detail = "";
   try {
     if (first.trim() && second.trim()) {
