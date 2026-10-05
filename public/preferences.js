@@ -1,7 +1,11 @@
-// Apply saved preferences before the page paints. Storage is optional.
-try {
-  const savedTheme = localStorage.getItem("kolayhesap.theme");
-  const savedLanguage = localStorage.getItem("kolayhesap.language");
+// Apply saved preferences, or the browser language, before the page paints.
+{
+  let savedTheme = null, savedLanguage = null;
+  try {
+    savedTheme = localStorage.getItem("kolayhesap.theme");
+    savedLanguage = localStorage.getItem("kolayhesap.language");
+  } catch { /* The calculator also works when storage is blocked. */ }
   if (savedTheme === "light" || savedTheme === "dark") document.documentElement.dataset.theme = savedTheme;
-  if (savedLanguage === "en" || savedLanguage === "tr") document.documentElement.lang = savedLanguage;
-} catch { /* The calculator also works when storage is blocked. */ }
+  const browser = (navigator.language || "").toLowerCase().startsWith("tr") ? "tr" : "en";
+  document.documentElement.lang = savedLanguage === "en" || savedLanguage === "tr" ? savedLanguage : browser;
+}
