@@ -11,8 +11,12 @@ function saved<T extends string>(key: string, allowed: readonly T[], fallback: T
   } catch { /* Storage is optional, including in private browsing. */ }
   return fallback;
 }
+function remember(key: string, value: string) {
+  try { localStorage.setItem(key, value); } catch { /* Keep working without storage. */ }
+}
+const browserLanguage = (): Language => navigator.language?.toLowerCase().startsWith("tr") ? "tr" : "en";
 export default function App() {
-  const [language, setLanguage] = useState<Language>(() => saved("kolayhesap.language", ["en", "tr"], "en"));
+  const [language, setLanguage] = useState<Language>(() => saved("kolayhesap.language", ["en", "tr"], browserLanguage()));
   const [theme, setTheme] = useState<Theme>(() => saved("kolayhesap.theme", ["dark", "light"], "dark"));
   const [mode, setMode] = useState<Mode>("percent");
   const [first, setFirst] = useState("1000"), [second, setSecond] = useState("20");
@@ -29,8 +33,9 @@ export default function App() {
     document.title = t.title;
     document.querySelector('meta[name="description"]')?.setAttribute("content", t.description);
     document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#101813" : "#f6f7f2");
-    try { localStorage.setItem("kolayhesap.language", language); localStorage.setItem("kolayhesap.theme", theme); } catch { /* Keep working without storage. */ }
   }, [language, theme, t.title, t.description]);
+  function chooseLanguage(next: Language) { setLanguage(next); remember("kolayhesap.language", next); }
+  function chooseTheme(next: Theme) { setTheme(next); remember("kolayhesap.theme", next); }
   let result: ReturnType<typeof calculate> | null = null, resultError = "", detail = "";
   try {
     if (first.trim() && second.trim()) {
@@ -73,8 +78,8 @@ export default function App() {
     <header className="topbar">
       <a className="brand" href="#" aria-label="Kolay Hesap"><span className="brand-mark">=</span>kolay<span>hesap</span><span className="brand-dot">.</span></a>
       <div className="toolbar">
-        <div className="segmented languages" role="group" aria-label={t.language}>{(["en", "tr"] as const).map(lang => <button key={lang} lang={lang} aria-label={lang === "en" ? "English" : "Türkçe"} aria-pressed={language === lang} onClick={() => setLanguage(lang)}>{lang.toUpperCase()}</button>)}</div>
-        <div className="segmented themes" role="group" aria-label={t.theme}><button aria-pressed={theme === "light"} onClick={() => setTheme("light")}><span aria-hidden="true">☀</span><span>{t.light}</span></button><button aria-pressed={theme === "dark"} onClick={() => setTheme("dark")}><span aria-hidden="true">☾</span><span>{t.dark}</span></button></div>
+        <div className="segmented languages" role="group" aria-label={t.language}>{(["en", "tr"] as const).map(lang => <button key={lang} lang={lang} aria-label={lang === "en" ? "English" : "Türkçe"} aria-pressed={language === lang} onClick={() => chooseLanguage(lang)}>{lang.toUpperCase()}</button>)}</div>
+        <div className="segmented themes" role="group" aria-label={t.theme}><button aria-pressed={theme === "light"} onClick={() => chooseTheme("light")}><span aria-hidden="true">☀</span><span>{t.light}</span></button><button aria-pressed={theme === "dark"} onClick={() => chooseTheme("dark")}><span aria-hidden="true">☾</span><span>{t.dark}</span></button></div>
         <a className="github" href="https://github.com/Talkdedsec/kolay-hesap" target="_blank" rel="noreferrer">GitHub ↗</a>
       </div>
     </header>
