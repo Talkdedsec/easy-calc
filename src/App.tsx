@@ -16,8 +16,8 @@ function remember(key: string, value: string) {
 }
 const browserLanguage = (): Language => navigator.language?.toLowerCase().startsWith("tr") ? "tr" : "en";
 export default function App() {
-  const [language, setLanguage] = useState<Language>(() => saved("kolayhesap.language", ["en", "tr"], browserLanguage()));
-  const [theme, setTheme] = useState<Theme>(() => saved("kolayhesap.theme", ["dark", "light"], "dark"));
+  const [language, setLanguage] = useState<Language>(() => saved("easycalc.language", ["en", "tr"], browserLanguage()));
+  const [theme, setTheme] = useState<Theme>(() => saved("easycalc.theme", ["dark", "light"], "dark"));
   const [mode, setMode] = useState<Mode>("percent");
   const [first, setFirst] = useState("1000"), [second, setSecond] = useState("20");
   const [expression, setExpression] = useState("");
@@ -34,8 +34,8 @@ export default function App() {
     document.querySelector('meta[name="description"]')?.setAttribute("content", t.description);
     document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#101813" : "#f6f7f2");
   }, [language, theme, t.title, t.description]);
-  function chooseLanguage(next: Language) { setLanguage(next); remember("kolayhesap.language", next); }
-  function chooseTheme(next: Theme) { setTheme(next); remember("kolayhesap.theme", next); }
+  function chooseLanguage(next: Language) { setLanguage(next); remember("easycalc.language", next); }
+  function chooseTheme(next: Theme) { setTheme(next); remember("easycalc.theme", next); }
   let result: ReturnType<typeof calculate> | null = null, resultError = "", detail = "";
   try {
     if (first.trim() && second.trim()) {
@@ -76,11 +76,11 @@ export default function App() {
   const keys = ["AC", "(", ")", "⌫", "7", "8", "9", "÷", "4", "5", "6", "×", "1", "2", "3", "−", "%", "0", language === "tr" ? "," : ".", "+"];
   return <main>
     <header className="topbar">
-      <a className="brand" href="#" aria-label="Kolay Hesap"><span className="brand-mark">=</span>kolay<span>hesap</span><span className="brand-dot">.</span></a>
+      <a className="brand" href="#" aria-label="Easy Calc"><span className="brand-mark">=</span>easy<span>calc</span><span className="brand-dot">.</span></a>
       <div className="toolbar">
         <div className="segmented languages" role="group" aria-label={t.language}>{(["en", "tr"] as const).map(lang => <button key={lang} lang={lang} aria-label={lang === "en" ? "English" : "Türkçe"} aria-pressed={language === lang} onClick={() => chooseLanguage(lang)}>{lang.toUpperCase()}</button>)}</div>
         <div className="segmented themes" role="group" aria-label={t.theme}><button aria-pressed={theme === "light"} onClick={() => chooseTheme("light")}><span aria-hidden="true">☀</span><span>{t.light}</span></button><button aria-pressed={theme === "dark"} onClick={() => chooseTheme("dark")}><span aria-hidden="true">☾</span><span>{t.dark}</span></button></div>
-        <a className="github" href="https://github.com/Talkdedsec/kolay-hesap" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a className="github" href="https://github.com/Talkdedsec/easy-calc" target="_blank" rel="noreferrer">GitHub ↗</a>
       </div>
     </header>
     <section className="intro"><div><div className="eyebrow"><span className="status-dot" />{t.eyebrow}</div><h1>{t.headline}<br /><span>{t.accent}</span></h1><p>{t.intro}</p></div><div className="intro-aside"><div className="decorative-equation" aria-hidden="true"><span>1,000</span><span>× 20%</span><strong>200<span>↗</span></strong></div><span className="aside-note">{t.tagline}</span></div></section>
@@ -94,6 +94,6 @@ export default function App() {
       <div className="notice" role="status">{notice ? t[notice] : ""}</div><p className="input-help">{t.help}<br />{t.ratesHelp}</p>
     </section><section className="calculator" aria-labelledby="calculator-title"><div className="section-top"><h2 id="calculator-title"><span className="section-index">02</span>{t.classic}</h2><span className="tiny-label" aria-hidden="true">+ − × ÷</span></div><div className="screen"><label htmlFor="expression">{t.expression}</label><input id="expression" value={expression} placeholder="0" spellCheck={false} autoComplete="off" maxLength={200} onChange={event => { setExpression(event.target.value); setAnswer(null); setError(""); }} onKeyDown={event => { if (event.key === "Enter") { event.preventDefault(); solve(); } if (event.key === "Escape") press("AC"); }} /><output aria-live="polite" className={error ? "error" : ""}>{error ? translateError(error, language) : answer === null ? "" : "= " + fmt(answer)}</output></div><div className="keypad">{keys.map(key => <button key={key} onClick={() => press(key)} aria-label={key === "⌫" ? t.backspace : key === "AC" ? t.clear : key} className={key === "AC" ? "clear" : ["÷", "×", "−", "+"].includes(key) ? "operator" : ""}>{key}</button>)}<button className="equals" onClick={solve}>{t.compute}<span>=</span></button></div><p className="keyboard-hint"><kbd>Enter</kbd>{t.compute}<span>·</span><kbd>Esc</kbd>{t.clear}</p><p className="percent-hint">{t.percentHint}</p></section></div>
     <section className="history"><div className="section-top"><h2><span className="section-index">03</span>{t.history}<span className="history-count">{history.length.toString().padStart(2, "0")}</span></h2>{history.length > 0 && <button className="text-button" onClick={() => setHistory([])}>{t.clear}</button>}</div>{history.length ? <div className="history-list">{history.map((item, index) => <button key={index} onClick={() => { setExpression(item.expression); setAnswer(item.value); setError(""); }}><span>{item.expression}</span><strong>= {fmt(item.value)}</strong><span aria-hidden="true">↗</span></button>)}</div> : <p className="history-empty"><span aria-hidden="true">↶</span>{t.historyEmpty}</p>}<p className="history-note">{t.historyNote}</p></section>
-    <footer><span><strong>kolayhesap.</strong>{t.footer}</span><span>{t.privacy}</span></footer>
+    <footer><span><strong>easycalc.</strong>{t.footer}</span><span>{t.privacy}</span></footer>
   </main>;
 }

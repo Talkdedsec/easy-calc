@@ -1,16 +1,16 @@
-![Kolay Hesap — Less effort. More clarity.](public/banner.png)
+![Easy Calc — Less effort. More clarity.](public/banner.png)
 
-<p align="center"><strong>English</strong> · <a href="docs/README.tr.md">Türkçe</a></p>
-<p align="center"><a href="https://talkdedsec.github.io/kolay-hesap/">Open the calculator</a> · <a href="#getting-started">Get started</a> · <a href="#calculation-rules">Calculation rules</a></p>
+<p align="center"><strong>English</strong> · <a href="README.tr.md">Türkçe</a></p>
+<p align="center"><a href="https://talkdedsec.github.io/easy-calc/">Open the calculator</a> · <a href="#getting-started">Get started</a> · <a href="#calculation-rules">Calculation rules</a></p>
 
-# Kolay Hesap
+# Easy Calc
 
 **Everyday calculations, made simple.** Percentages, discounts, increases and VAT in a focused interface, with instant answers.
 
 ## Features
 
 - **Dark & light themes** — switch at any time; your preference is remembered on your device.
-- **English first, Turkish optional** — all controls, results, errors and number formatting follow your selected language.
+- **English and Turkish** — opens in your browser's language; controls, results, errors and number formatting follow the language you pick, and your choice is remembered.
 - **Seven quick tools** — percentage, discount, increase, percentage ratio, percentage change, add VAT and remove VAT.
 - **Classic calculator** — operator precedence, parentheses, negative values and decimals, without `eval`.
 - **Less typing** — preset rates, live results, copy to clipboard and reusable session history.
@@ -24,8 +24,8 @@ Changing theme or language preserves your current inputs and calculation history
 Use Node.js 24.
 
 ```sh
-git clone https://github.com/Talkdedsec/kolay-hesap.git
-cd kolay-hesap
+git clone https://github.com/Talkdedsec/easy-calc.git
+cd easy-calc
 npm ci
 npm run dev
 ```
