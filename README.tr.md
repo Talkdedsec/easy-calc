@@ -1,16 +1,16 @@
-![Kolay Hesap — Daha az uğraş, daha net sonuç.](../public/banner.png)
+![Easy Calc — Daha az uğraş, daha net sonuç.](public/banner.png)
 
-<p align="center"><a href="../README.md">English</a> · <strong>Türkçe</strong></p>
-<p align="center"><a href="https://talkdedsec.github.io/kolay-hesap/">Hesap makinesini aç</a> · <a href="#kurulum">Kurulum</a> · <a href="#hesaplama-kuralları">Hesaplama kuralları</a></p>
+<p align="center"><a href="README.md">English</a> · <strong>Türkçe</strong></p>
+<p align="center"><a href="https://talkdedsec.github.io/easy-calc/">Hesap makinesini aç</a> · <a href="#kurulum">Kurulum</a> · <a href="#hesaplama-kuralları">Hesaplama kuralları</a></p>
 
-# Kolay Hesap
+# Easy Calc
 
 **Günlük hesaplar artık çok kolay.** Yüzde, indirim, zam ve KDV hesaplarını sade bir arayüzde anında yap.
 
 ## Özellikler
 
 - **Koyu ve açık tema** — istediğin an değiştir; tercihin cihazında hatırlanır.
-- **İngilizce varsayılan, Türkçe seçilebilir** — düğmeler, sonuçlar, hata mesajları ve sayı biçimi seçtiğin dile uyar.
+- **Türkçe ve İngilizce** — tarayıcının dilinde açılır; düğmeler, sonuçlar, hata mesajları ve sayı biçimi seçtiğin dile uyar, seçimin hatırlanır.
 - **Yedi hızlı araç** — yüzde, indirim, zam, yüzde oranı, yüzde değişimi, KDV ekleme ve ayırma.
 - **Klasik hesap makinesi** — işlem önceliği, parantez, negatif ve ondalık değerler; `eval` kullanılmaz.
 - **Daha az yazı** — hazır oranlar, anlık sonuçlar, kopyalama ve tekrar kullanılabilir işlem geçmişi.
@@ -24,8 +24,8 @@ Dil veya tema değiştirmek girdilerini ve geçmişini silmez. İşlem geçmişi
 Node.js 24 kullan.
 
 ```sh
-git clone https://github.com/Talkdedsec/kolay-hesap.git
-cd kolay-hesap
+git clone https://github.com/Talkdedsec/easy-calc.git
+cd easy-calc
 npm ci
 npm run dev
 ```
