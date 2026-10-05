@@ -1,4 +1,4 @@
-import type { Mode } from "./math";
+import type { CalcErrorCode, Mode } from "./math";
 export type Language = "en" | "tr";
 export const localeFormat = (value: number, language: Language) => new Intl.NumberFormat(language === "tr" ? "tr-TR" : "en-US", { maximumFractionDigits: 8 }).format(value);
 export const modeConfig: { id: Mode; icon: string; defaults: [string, string] }[] = [
@@ -46,18 +46,36 @@ export const translations = {
   },
  },
 };
-const errors: Record<string, string> = {
- "Sonuç hesaplanamıyor. Sayıları kontrol et.": "Unable to calculate. Check your numbers.",
- "Geçerli bir sayı yaz. Binlik ayırıcı kullanma.": "Enter a valid number without thousands separators.",
- "Toplam sıfır olamaz.": "The whole cannot be zero.",
- "Eski değer sıfırdan büyük olmalı.": "The old value must be greater than zero.",
- "Tutar ve oran negatif olamaz.": "The amount and rate cannot be negative.",
- "İndirim oranı %100'ü geçemez.": "The discount cannot exceed 100%.",
- "İşlem çok uzun.": "The expression is too long.",
- "İşlemi kontrol et. Yalnızca sayı ve işlem işaretleri kullan.": "Use only numbers and arithmetic operators.",
- "Parantezleri kontrol et.": "Check your parentheses.",
- "İşlem tamamlanmamış.": "The expression is incomplete.",
- "Sıfıra bölme yapılamaz.": "Cannot divide by zero.",
- "İşlem işaretlerini ve parantezleri kontrol et.": "Check your operators and parentheses.",
+const errors: Record<Language, Record<CalcErrorCode, string>> = {
+ en: {
+  notFinite: "Unable to calculate. Check your numbers.",
+  invalidNumber: "Enter a valid number without thousands separators.",
+  zeroWhole: "The whole cannot be zero.",
+  oldNotPositive: "The old value must be greater than zero.",
+  negativeInput: "The amount and rate cannot be negative.",
+  discountOver100: "The discount cannot exceed 100%.",
+  tooLong: "The expression is too long.",
+  invalidCharacters: "Use only numbers and arithmetic operators.",
+  parentheses: "Check your parentheses.",
+  incomplete: "The expression is incomplete.",
+  divideByZero: "Cannot divide by zero.",
+  malformed: "Check your operators and parentheses.",
+ },
+ tr: {
+  notFinite: "Sonuç hesaplanamıyor. Sayıları kontrol et.",
+  invalidNumber: "Geçerli bir sayı yaz. Binlik ayırıcı kullanma.",
+  zeroWhole: "Toplam sıfır olamaz.",
+  oldNotPositive: "Eski değer sıfırdan büyük olmalı.",
+  negativeInput: "Tutar ve oran negatif olamaz.",
+  discountOver100: "İndirim oranı %100'ü geçemez.",
+  tooLong: "İşlem çok uzun.",
+  invalidCharacters: "İşlemi kontrol et. Yalnızca sayı ve işlem işaretleri kullan.",
+  parentheses: "Parantezleri kontrol et.",
+  incomplete: "İşlem tamamlanmamış.",
+  divideByZero: "Sıfıra bölme yapılamaz.",
+  malformed: "İşlem işaretlerini ve parantezleri kontrol et.",
+ },
 };
-export const translateError = (message: string, language: Language) => language === "tr" ? message : errors[message] ?? "Unable to calculate. Check your expression.";
+const fallback: Record<Language, string> = { en: "Unable to calculate. Check your expression.", tr: "Hesaplanamadı. İşlemi kontrol et." };
+/** Turns a CalcError code (the thrown message) into text in the chosen language. */
+export const translateError = (code: string, language: Language) => errors[language][code as CalcErrorCode] ?? fallback[language];
