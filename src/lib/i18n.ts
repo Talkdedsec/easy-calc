@@ -12,7 +12,7 @@ export const modeConfig: { id: Mode; icon: string; defaults: [string, string] }[
 ];
 export const translations = {
  en: {
-  title: "Kolay Hesap — Everyday calculations, made simple",
+  title: "Easy Calc — Everyday calculations, made simple",
   description: "Calculate percentages, discounts, increases and VAT instantly. A free calculator in English and Turkish.",
   tagline: "Small calculations. A little more clarity.", eyebrow: "YOUR EVERYDAY CALCULATOR", headline: "Less effort.", accent: "More clarity.", intro: "From a quick discount to a tricky percentage. Make the numbers work for you.",
   quick: "What are we calculating?", instant: "Live result", rate: "Quick rates", result: "RESULT", empty: "Fill in both fields to see your result.", copy: "Copy result", copied: "Result copied.", copyFailed: "Copy is unavailable. Select the result and copy it manually.",
@@ -29,7 +29,7 @@ export const translations = {
   },
  },
  tr: {
-  title: "Kolay Hesap — Günlük hesaplar artık çok kolay",
+  title: "Easy Calc — Günlük hesaplar artık çok kolay",
   description: "Yüzde, indirim, zam ve KDV hesaplarını anında yap. İngilizce ve Türkçe ücretsiz hesap makinesi.",
   tagline: "Küçük hesaplar. Büyük kolaylık.", eyebrow: "GÜNLÜK HAYATIN HESAP MAKİNESİ", headline: "Hesabı kafana", accent: "takma.", intro: "İndirimden yüzdeye, zamdan KDV’ye. Sayıları yaz, gerisini bize bırak.",
   quick: "Ne hesaplayalım?", instant: "Anında sonuç", rate: "Hızlı oranlar", result: "SONUÇ", empty: "Sonucu görmek için iki alanı da doldur.", copy: "Sonucu kopyala", copied: "Sonuç kopyalandı.", copyFailed: "Kopyalama kullanılamıyor. Sonucu seçip elle kopyalayabilirsin.",
