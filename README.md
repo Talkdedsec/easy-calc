@@ -77,3 +77,7 @@ Focus the classic expression field to type a calculation. **Enter** calculates; 
 | `public/banner.png` | README banner and social preview |
 | `tests/` | Math and localization checks |
 | `.github/workflows/pages.yml` | Checks and GitHub Pages publishing |
+
+<p align="center">
+  <sub>Built by <a href="https://talkdedsec.com">Talkdedsec</a></sub>
+</p>

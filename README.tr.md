@@ -77,3 +77,7 @@ Klasik hesap alanına tıklayıp işlemini yaz. **Enter** hesaplar, **Esc** temi
 | `public/banner.png` | README banner'ı ve sosyal önizleme |
 | `tests/` | Matematik ve yerelleştirme kontrolleri |
 | `.github/workflows/pages.yml` | Kontroller ve GitHub Pages yayını |
+
+<p align="center">
+  <sub><a href="https://talkdedsec.com">Talkdedsec</a> tarafından yapıldı</sub>
+</p>
